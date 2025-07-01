@@ -1,9 +1,17 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 
 function Usuarios() {
-  return (
+  const { id } = useParams()
+  if(id){
+    return (
+      <div>Usuarios con el id: {id}</div>
+    )
+  }else{
+    return (
     <div>Usuarios</div>
   )
+  }
 }
 
 export default Usuarios
