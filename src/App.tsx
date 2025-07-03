@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom"
 import Footer from "./components/Footer/footer"
 import Header from "./components/Header/header"
 import Post from "./pages/Post"
-import Usuario from "./pages/Usuario"
+import Perfil from "./pages/Perfil"
 import Login from "./pages/Login"
 import Etiquetas from "./pages/Etiquetas"
 import Home from "./pages/Home"
@@ -18,7 +18,7 @@ const App = () => {
         <main className="flex-grow-1">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/users/:id" element={<Usuario />} />
+            <Route path="/perfil" element={<Perfil />} />
             <Route path="/post/:id" element={<Post />} />
             <Route path="/login" element={<Login />} />
             <Route path="/*" element={<Navigate to="/" />} />

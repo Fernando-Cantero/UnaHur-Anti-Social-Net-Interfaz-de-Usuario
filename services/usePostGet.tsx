@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
-const PostGet = () => {
-    const [data, setData] = useState(null)
+const usePostGet = () => {
+    const [data, setData] = useState([])
 
     useEffect(() => {
         const obtenerPost = async () => {
@@ -18,6 +18,7 @@ const PostGet = () => {
         }
         obtenerPost()
     }, [])
+    return data
 }
 
-export default PostGet
+export default usePostGet
