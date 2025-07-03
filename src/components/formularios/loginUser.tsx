@@ -33,7 +33,7 @@ const LoginUser = () => {
       }
 
       login(usuarioEncontrado);
-      navigate("/");
+      navigate("/perfilUser");
     } catch (err) {
       setError("Error al conectar con el servidor");
     }
