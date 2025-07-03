@@ -14,9 +14,9 @@ const LoginUser = () => {
     e.preventDefault();
     setError("");
 
-    // Contraseña mínima 6 caracteres
-    if (password.length < 6) {
-      setError("La contraseña debe tener al menos 6 caracteres");
+
+    if (password != '123456') {
+      setError("La contraseña es incorrecta");
       return;
     }
 

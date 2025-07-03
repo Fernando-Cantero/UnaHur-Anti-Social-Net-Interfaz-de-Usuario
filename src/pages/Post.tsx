@@ -2,13 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import PosteoDetalle from '../components/posteoDetalle'
 
-const PostDetalle = () => {
+const Post = () => {
   const { id } = useParams()
   const [post, setPost] = useState(null)
   const [imagenes, setImagenes] = useState([])
   const [comentarios, setComentarios] = useState([])
-  const [nuevoComentario, setNuevoComentario] = useState('')
-  const [enviando, setEnviando] = useState(false)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,4 +50,4 @@ const PostDetalle = () => {
   )
 }
 
-export default PostDetalle
+export default Post

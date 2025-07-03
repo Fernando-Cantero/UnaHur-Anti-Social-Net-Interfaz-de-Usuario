@@ -1,4 +1,4 @@
-
+import AgregarComentario from './comentario'
 
 const PosteoDetalle = ({ id, description, user, tags, images, comments, fecha }) => {
 
@@ -56,6 +56,7 @@ const PosteoDetalle = ({ id, description, user, tags, images, comments, fecha })
 
                     </div>
                 </div>)}
+            <AgregarComentario postId={id}></AgregarComentario>
 
 
             < p className="text-muted" style={{ color: 'black' }}>
