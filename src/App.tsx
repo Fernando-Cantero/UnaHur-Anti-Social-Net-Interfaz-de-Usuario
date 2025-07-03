@@ -2,30 +2,33 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import Footer from "./components/Footer/footer"
 import Header from "./components/Header/header"
-import Usuarios from "./pages/Usuarios"
-import Publicaciones from "./pages/Publicaciones"
-import Comentarios from "./pages/Comentarios"
+import Post from "./pages/Post"
+import Usuario from "./pages/Usuario"
+import Login from "./pages/Login"
 import Etiquetas from "./pages/Etiquetas"
-import Inicio from "./pages/Inicio"
+import Home from "./pages/Home"
+import AuthProvider from "./context/AuthProvider"
 
 // Componente 1
 const App = () => {
-  return  <>
-            <Header />
-            <Routes>
-              <Route path="/" element={ <Inicio/> }/>
-              <Route path="/usuarios" element={ <Usuarios/>}/>
-              <Route path="/usuarios/:id" element={ <Usuarios/>}/>
-              <Route path="/publicaciones" element={ <Publicaciones/> }/>
-              <Route path="/publicaciones/:id" element={ <Publicaciones/> }/>
-              <Route path="/comentarios" element={ <Comentarios/> }/>
-              <Route path="/comentarios/:id" element={ <Comentarios/> }/>
-              <Route path="/etiquetas" element={ <Etiquetas/> }/>
-              <Route path="/etiquetas/:id" element={ <Etiquetas/> }/>
-              <Route path="/*" element={ <Navigate to="/" /> } />
-            </Routes>
-            <Footer />
-          </>
+  return <>
+    <div className="d-flex flex-column min-vh-100">
+      <AuthProvider>
+        <Header />
+        <main className="flex-grow-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/users/:id" element={<Usuario />} />
+            <Route path="/post/:id" element={<Post />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/*" element={<Navigate to="/" />} />
+          </Routes>
+        </main>
+
+        <Footer />
+      </AuthProvider>
+    </div>
+  </>
 }
 
 
