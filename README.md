@@ -1,6 +1,7 @@
 # UnaHur Anti-Social Net - Interfaz de Usuario
 
 ![Red Social React](./public/react.png)
+-- React Red Social --
 
 ## 📝 Descripción del Proyecto
 
@@ -76,7 +77,7 @@ Fernando Cantero
 Nahuel Negreti Carballo
 | Estudiante de Programación – Universidad Nacional de Hurlingham
 
-Roberto Galeano  
+Roberto Galeano
 | Estudiante de Programación – Universidad Nacional de Hurlingham
 
 Matias Daniel Diaz
