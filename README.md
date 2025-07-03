@@ -1,69 +1,85 @@
-# React + TypeScript + Vite
+# UnaHur Anti-Social Net - Interfaz de Usuario
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Red Social React](./public/react.png)
 
-Currently, two official plugins are available:
+## 📝 Descripción del Proyecto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+UnaHur Anti-Social Net es una red social simple desarrollada como parte de una actividad académica. Esta interfaz de usuario, construida con **React**, permite a los usuarios registrarse, iniciar sesión, crear publicaciones con imágenes y etiquetas, y ver comentarios.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ⚙️ Instrucciones para correr el proyecto en local
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### ✅ Requisitos
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- Node.js (v16 o superior)
+- npm 
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 📦 Instalación
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clonar el repositorio:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+   ```bash
+   git clone https://github.com/tu-usuario/UnaHur-Anti-Social-Net-Interfaz-de-Usuario.git
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+   cd UnaHur-Anti-Social-Net-Interfaz-de-Usuario
+   ```
+
+2. Instalar las dependencias:
+
+   ```bash
+   npm install
+   ```
+
+3. Iniciar el servidor de desarrollo:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Abrir tu navegador en:  
+   👉 [http://localhost:5173]
+
+> 💡 **Nota:** Asegurarce de tener corriendo el backend en paralelo en el puerto: 3001
+
+---
+
+## 🌐 URL de la API utilizada
+
+Esta aplicación consume datos desde una API local desarrollada para el proyecto.
+ -> `http://localhost:3001`
+
+- **Base URL del backend:**  
+  `http://localhost:3001`
+
+- **Endpoints principales disponibles:**
+
+  | Método | Endpoint                      | Descripción                            |
+  |--------|-------------------------------|----------------------------------------|
+  | GET    | `/users`                      | Listar usuarios                        |
+  | POST   | `/users`                      | Crear usuario                          |
+  | GET    | `/posts`                      | Listar publicaciones                   |
+  | POST   | `/posts`                      | Crear publicación                      |
+  | GET    | `/tags`                       | Obtener etiquetas                      |
+  | POST   | `/postimages`                 | Subir imagen a una publicación         |
+  | GET    | `/postimages/post/:postId`    | Obtener imágenes de un post            |
+  | GET    | `/comments/post/:postId`      | Obtener comentarios de un post         |
+  | POST   | `/comments`                   | Agregar un comentario                  |
+
+---
+
+## 👩‍💻 Autores
+
+Fernando Cantero
+| Estudiante de Programación – Universidad Nacional de Hurlingham
+
+Nahuel Negreti Carballo
+| Estudiante de Programación – Universidad Nacional de Hurlingham
+
+Roberto Galeano  
+| Estudiante de Programación – Universidad Nacional de Hurlingham
+
+Matias Daniel Diaz
+| Estudiante de Programación – Universidad Nacional de Hurlingham
+
+---
