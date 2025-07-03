@@ -5,7 +5,7 @@ import Header from "./components/Header/header"
 import Post from "./pages/Post"
 import Perfil from "./pages/Perfil"
 import Login from "./pages/Login"
-import Etiquetas from "./pages/Etiquetas"
+import Publicar from "./pages/publicar"
 import Home from "./pages/Home"
 import AuthProvider from "./context/AuthProvider"
 import RegisterUser from "./components/formularios/registerUser"
@@ -22,8 +22,9 @@ const App = () => {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/post/:id" element={<Post />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<RegisterUser/>} />
+            <Route path="/register" element={<RegisterUser />} />
             <Route path="/perfilUser" element={<Perfil />} />
+            <Route path="/publicar" element={<Publicar />} />
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
         </main>

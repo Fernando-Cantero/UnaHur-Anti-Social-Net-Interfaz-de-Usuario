@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom"
 
 
-const Posteo = ({ id, description, nickName, tags, images, comments, fecha }) => {
+const Posteo = ({ id, description, user, tags, images, comments, fecha }) => {
 
     return (
         <div className="card mb-4 shadow-sm">
             <div className="card-header d-flex justify-content-between">
-                <strong>@{nickName}</strong>
+                <strong>@{user.nickName}</strong>
             </div>
             <div className="card-body">
                 <p className="card-text" style={{ color: 'black' }}>{description}</p>

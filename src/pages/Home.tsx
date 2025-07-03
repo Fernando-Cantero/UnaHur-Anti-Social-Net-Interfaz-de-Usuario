@@ -12,7 +12,6 @@ function Home() {
   const [comentariosPorPost, setComentariosPorPost] = useState({});
 
   useEffect(() => {
-    if (!auth?.usuario) return; // si no hay usuario, no cargar datos
 
     const fetchPostExtras = async () => {
       const nuevasImagenes = {};
@@ -43,13 +42,6 @@ function Home() {
     }
   }, [posts, auth]);
 
-  if (!auth?.usuario) {
-    return (
-      <div className="container mt-4">
-        <h3>Debes iniciar sesión para ver el contenido.</h3>
-      </div>
-    );
-  }
 
   return (
     <div className="container mt-4">
@@ -58,7 +50,7 @@ function Home() {
           key={post.id}
           id={post.id}
           description={post.description}
-          nickName={post.User?.nickName}
+          user={post.User}
           tags={post.Tags}
           images={imagenesPorPost[post.id] || []}
           comments={comentariosPorPost[post.id] || []}

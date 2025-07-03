@@ -1,57 +1,126 @@
+import { useContext, useState } from 'react'
+import { AuthContext } from '../../context/AuthProvider'
+import postPost from '../../../services/postPost'
+import postImage from '../../../services/postImage'
+import useTagsGet from '../../../services/useTagsGet'
 
-const PostPost = ({ etiquetas }) => {
-    return <>
-        <div className="container-fluid d-flex justify-content-center align-items-center bg-light" style={{ minHeight: '70vh' }}>
-            <div className="row w-100">
-                <div className="col-11 col-sm-10 col-md-8 col-lg-6 mx-auto">
-                    <div className="card shadow p-4">
-                        <h3 className="text-center mb-3">Crear Publicación</h3>
-                        <form>
-                            <div className="mb-3">
-                                <textarea
-                                    required
-                                    className="form-control"
-                                    id="description"
-                                    placeholder="¿Qué estás pensando?"
-                                    style={{ color: 'black' }}
+const PostPost = () => {
+    const { usuario } = useContext(AuthContext)
+    const tags = useTagsGet()  // Usamos el hook para obtener las etiquetas
+    const [descripcion, setDescripcion] = useState('')
+    const [imagenes, setImagenes] = useState(['', '', ''])
+    const [tagsSeleccionados, setTagsSeleccionados] = useState([])
+    const [mensaje, setMensaje] = useState('')
+
+    const handleCheckbox = (tagId) => {
+        setTagsSeleccionados((prev) =>
+            prev.includes(tagId) ? prev.filter((t) => t !== tagId) : [...prev, tagId]
+        )
+    }
+
+    const handleChangeImg = (index, value) => {
+        const nuevas = [...imagenes]
+        nuevas[index] = value
+        setImagenes(nuevas)
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        if (!descripcion.trim()) {
+            setMensaje('⚠️ La descripción no puede estar vacía.')
+            return
+        }
+
+        if (!usuario || !usuario.id) {
+            setMensaje('❌ No se encontró el usuario.')
+            return
+        }
+
+        try {
+            const nuevoPost = await postPost({
+                description: descripcion.trim(),
+                userId: usuario.id,
+                tagIds: tagsSeleccionados,
+            })
+
+            const urls = imagenes.filter((url) => url.trim() !== '')
+            for (let url of urls) {
+                await postImage({ url, postId: nuevoPost.id })
+            }
+
+            setDescripcion('')
+            setTagsSeleccionados([])
+            setImagenes(['', '', ''])
+            setMensaje('✅ Publicación creada con éxito.')
+        } catch (err) {
+            console.error(err)
+            setMensaje('❌ Error al crear el post')
+        }
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="card shadow p-4 mt-4">
+            <h5 className="text-center mb-3">Crear Publicación</h5>
+            <div className="mb-3">
+                <textarea
+                    required
+                    className="form-control"
+                    placeholder="¿Qué estás pensando?"
+                    style={{ color: 'black' }}
+                    value={descripcion}
+                    onChange={(e) => setDescripcion(e.target.value)}
+                />
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label" style={{ color: 'black' }}>
+                    Agrega imágenes a tu publicación (opcional)
+                </label>
+                {[0, 1, 2].map((i) => (
+                    <input
+                        key={i}
+                        type="text"
+                        className="form-control mb-2"
+                        placeholder={`URL de la imagen ${i + 1}`}
+                        value={imagenes[i]}
+                        onChange={(e) => handleChangeImg(i, e.target.value)}
+                    />
+                ))}
+            </div>
+
+            <div className="mb-3">
+                <label className="form-label" style={{ color: 'black' }}>
+                    Selecciona etiquetas:
+                </label>
+                <div>
+                    {
+                        tags.map((tag) => (
+                            <div className="form-check form-check-inline" key={tag.id}>
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id={tag.id}
+                                    value={tag.id}
+                                    checked={tagsSeleccionados.includes(tag.id)}
+                                    onChange={() => handleCheckbox(tag.id)}
                                 />
-                            </div>
-
-                            <div className="mb-3">
-                                <label htmlFor="img1" className="form-label" style={{ color: 'black' }}>
-                                    Agrega imágenes a tu publicación (opcional)
+                                <label className="form-check-label" htmlFor={tag.id} style={{ color: 'black' }}>
+                                    {tag.name}
                                 </label>
-                                <input type="text" className="form-control mb-2" id="img1" placeholder="URL de la imagen" />
-                                <input type="text" className="form-control mb-2" id="img2" placeholder="URL de la imagen" />
-                                <input type="text" className="form-control" id="img3" placeholder="URL de la imagen" />
                             </div>
-                            <div className="mb-3">
-                                <label className="form-label" style={{ color: 'black' }} >Selecciona etiquetas:</label>
-                                <div>
-                                    {etiquetas.map((tag, index) => (
-                                        <div className="form-check form-check-inline" key={index}>
-                                            <input
-                                                className="form-check-input"
-                                                type="checkbox"
-                                                id={tag}
-                                                value={tag}
-                                            />
-                                            <label className="form-check-label" htmlFor={tag} style={{ color: 'black' }}>
-                                                {tag}
-                                            </label>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                            <button type="submit" className="btn btn-primary w-100">
-                                Postear
-                            </button>
-                        </form>
-                    </div>
+                        ))
+                    }
                 </div>
             </div>
-        </div>
-    </>
+
+            <button type="submit" className="btn btn-primary w-100">
+                Postear
+            </button>
+
+            {mensaje && <div className="mt-2 text-muted small">{mensaje}</div>}
+        </form>
+    )
 }
 
 export default PostPost

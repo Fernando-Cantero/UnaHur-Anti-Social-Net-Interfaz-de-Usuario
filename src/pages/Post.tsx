@@ -29,33 +29,7 @@ const PostDetalle = () => {
 
     fetchData()
   }, [id])
-  {/*
-  const enviarComentario = async () => {
-    if (!nuevoComentario.trim()) return
 
-    setEnviando(true)
-    try {
-      const res = await fetch('http://localhost:3001/comments', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          postId: parseInt(id),
-          userId: 2, // 🔧 Reemplazar con usuario real
-          content: nuevoComentario.trim()
-        })
-      })
-
-      if (!res.ok) throw new Error('Error al enviar el comentario')
-
-      const nuevo = await res.json()
-      setComentarios([...comentarios, nuevo])
-      setNuevoComentario('')
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setEnviando(false)
-    }
-  }*/}
 
   if (!post) return <div className="container mt-5">Cargando post...</div>
 
@@ -66,7 +40,7 @@ const PostDetalle = () => {
         key={post.id}
         id={post.id}
         description={post.description}
-        nickName={post.User?.nickName}
+        user={post.User}
         tags={post.Tags}
         images={imagenes}
         comments={comentarios}
