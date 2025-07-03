@@ -1,65 +1,72 @@
-import { useState, useEffect } from 'react'
-import usePostGet from '../../services/usePostGet'
-import getPostImagesByPostId from '../../services/getPostImage'
-import getPostCommentsByPostId from '../../services/getCommentPost'
-import Posteo from '../components/posteo'
-
+import { useContext, useState, useEffect } from 'react';
+import { AuthContext } from "../context/AuthProvider";
+import usePostGet from '../../services/usePostGet';
+import getPostImagesByPostId from '../../services/getPostImage';
+import getPostCommentsByPostId from '../../services/getCommentPost';
+import Posteo from '../components/posteo';
 
 function Home() {
-    const posts = usePostGet()
-    const [imagenesPorPost, setImagenesPorPost] = useState({})
-    const [comentariosPorPost, setComentariosPorPost] = useState({})
+  const auth = useContext(AuthContext);
+  const posts = usePostGet();
+  const [imagenesPorPost, setImagenesPorPost] = useState({});
+  const [comentariosPorPost, setComentariosPorPost] = useState({});
 
-    useEffect(() => {
-        const fetchPostExtras = async () => {
-            const nuevasImagenes = {}
-            const nuevosComentarios = {}
+  useEffect(() => {
+    if (!auth?.usuario) return; // si no hay usuario, no cargar datos
 
-            for (let post of posts) {
-                try {
-                    const imgs = await getPostImagesByPostId(post.id)
-                    nuevasImagenes[post.id] = imgs
-                } catch (e) {
-                    nuevasImagenes[post.id] = []
-                }
+    const fetchPostExtras = async () => {
+      const nuevasImagenes = {};
+      const nuevosComentarios = {};
 
-                try {
-                    const comments = await getPostCommentsByPostId(post.id)
-                    nuevosComentarios[post.id] = comments
-                } catch (e) {
-                    nuevosComentarios[post.id] = []
-                }
-            }
-
-            setImagenesPorPost(nuevasImagenes)
-            setComentariosPorPost(nuevosComentarios)
+      for (let post of posts) {
+        try {
+          const imgs = await getPostImagesByPostId(post.id);
+          nuevasImagenes[post.id] = imgs;
+        } catch (e) {
+          nuevasImagenes[post.id] = [];
         }
 
-        if (posts.length > 0) {
-            fetchPostExtras()
+        try {
+          const comments = await getPostCommentsByPostId(post.id);
+          nuevosComentarios[post.id] = comments;
+        } catch (e) {
+          nuevosComentarios[post.id] = [];
         }
-    }, [posts])
+      }
 
+      setImagenesPorPost(nuevasImagenes);
+      setComentariosPorPost(nuevosComentarios);
+    };
+
+    if (posts.length > 0) {
+      fetchPostExtras();
+    }
+  }, [posts, auth]);
+
+  if (!auth?.usuario) {
     return (
-        <div className="container mt-4">
-            {posts.map((post) => (
-                <div>
-                    <Posteo
-                        key={post.id}
-                        id={post.id}
-                        description={post.description}
-                        nickName={post.User?.nickName}
-                        tags={post.Tags}
-                        images={imagenesPorPost[post.id] || []}
-                        comments={comentariosPorPost[post.id] || []}
-                        fecha={post.createdAt}
-                    />
-                </div>
+      <div className="container mt-4">
+        <h3>Debes iniciar sesión para ver el contenido.</h3>
+      </div>
+    );
+  }
 
-            ))
-            }
-        </div >
-    )
+  return (
+    <div className="container mt-4">
+      {posts.map((post) => (
+        <Posteo
+          key={post.id}
+          id={post.id}
+          description={post.description}
+          nickName={post.User?.nickName}
+          tags={post.Tags}
+          images={imagenesPorPost[post.id] || []}
+          comments={comentariosPorPost[post.id] || []}
+          fecha={post.createdAt}
+        />
+      ))}
+    </div>
+  );
 }
 
-export default Home
+export default Home;

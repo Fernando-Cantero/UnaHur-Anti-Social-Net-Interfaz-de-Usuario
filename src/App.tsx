@@ -8,6 +8,7 @@ import Login from "./pages/Login"
 import Etiquetas from "./pages/Etiquetas"
 import Home from "./pages/Home"
 import AuthProvider from "./context/AuthProvider"
+import RegisterUser from "./components/formularios/registerUser"
 
 // Componente 1
 const App = () => {
@@ -21,6 +22,8 @@ const App = () => {
             <Route path="/perfil" element={<Perfil />} />
             <Route path="/post/:id" element={<Post />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<RegisterUser/>} />
+            <Route path="/perfilUser" element={<Perfil />} />
             <Route path="/*" element={<Navigate to="/" />} />
           </Routes>
         </main>
