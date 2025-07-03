@@ -18,6 +18,7 @@ const Menu = () => {
                     <div className="navbar-nav">
                         <NavLink to="/" className="nav-link">Home</NavLink>
                         <NavLink to="/login" className="nav-link" >Login</NavLink>
+                        <NavLink to="/register" className="nav-link" >Register</NavLink>
                     </div>
                 </div>
             </div>
